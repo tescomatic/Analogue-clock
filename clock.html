@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<title>Analogue Clock</title>
+	 <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="jquery.alphanum-master/lib/browserReset.css" ></link>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="angular.js"></script>
+    <style type="text/css">
+    	
+    	#clockhands{
+        -webkit-animation:rotation 59s infinite linear;
+      }
+      @-webkit-keyframes rotation{
+        from{
+          -webkit-transform:rotate(0deg);
+        }
+        to{
+          -webkit-transform:rotate(359deg);
+        }
+      }
+    </style>
+</head>
+<body style="background: #EEEEEE" ng-app="Applicaton" >
+	<div class="container" ng-controller="registration">
+			<br>
+		<div class="col-7 m4-2 " ng-init="startWorker()">
+						
+				<div class="card card-cascade narrower z-depth-" style="height: 600px;width:100%;background: white;border-radius: 360px;margin-left: 10px">
+				                      
+				    <div class="card-body text-">
+				    	<!-- <b style="top:-10px;left:280px;position: relative;font-size:20px"><i >12</i></b>
+
+				    	<b style="top:30px;left:390px;position: relative;font-size:20px"><i >1</i></b>
+
+				    	<b style="top:115px;left:470px;position: relative;font-size:20px"><i >2</i></b> -->
+				        
+							<!-- <div style="margin-top:260px;margin-left: 190px;position: relative;">
+								<i class="fa fa-chevron-left">---------------------</i>
+								<i class="fa fa-circle"></i>
+								<div  style="z-index:;position:relative;display:;"><i>
+								<i class="fa fa-chevron-left" style="font-size: 20px"></i>-------------------------------------------------</i>
+								
+							    </div>
+
+
+							</div> -->
+							<img src="c.png"  class="" style="width: 750px;left:-90px;position: relative;top: -30px">
+
+							<div class="row" style="margin-top:-350px;z-index: 777;" >
+								<div class="col-2">
+									
+								</div>
+								<div class="col-11 "  style="position: relative;left: 30px;transform: rotate(90deg)" id="sec">
+
+									<div class="bg-danger " style="height:3px;position: relative;width: 60%;left: " >
+										
+									</div>
+
+								</div>
+								<div class="col-11 "  style="position: relative;left: 30px;transform: rotate(120deg);" id="hr">
+
+									<div class="bg-success " style="height:5px;position: relative;width: 40%;left: 90px;" >
+										
+									</div>
+
+								</div>
+								<div class="col-11 "  style="position: relative;left: 30px;transform: rotate(90deg);" id="min">
+
+									<div class="bg-warning " style="height:3px;position: relative;width: 55%;left: ">
+										
+									</div>
+
+								</div>
+                                <div class="col-11 "  style="position: relative;left: 30px;width:30%;top: -55px">
+
+                                    <div class="bg-info " style="height:100px;position: relative;width: 20%;left:200px;border-radius: 300px;border:solid red 3px; ">
+                                        
+                                    </div>
+
+                                </div>
+
+                                <div class="col-11 "  style="position: relative;left: 30px;">
+                                        
+                                    <h4 class=" " style="height:3px;position: relative;width: 55%;left:220px " >
+                                        <strong id="day" class="text-info"></strong>
+                                    </dh4>
+
+                                </div>
+                                
+							</div>
+<!-- 						<img src="hand.png" class="img-fluid" width="10" >
+ -->				    </div>
+				</div>
+					<h3>{{hour+":"+minute+":"+second}}	</h3>
+					<h5 id="text"></h5>
+					<input type="text" name="" ng-model="d">
+                    <h5 id="result"></h5>
+
+	</div>
+	</div>
+</body>
+</html>
+
+
+<script>
+ //     var app=angular.module('Applicaton',[]);
+ // app.controller('registration',function($scope,$http){
+var w;
+
+function startWorker()
+ {
+    
+
+    if(typeof(Worker) !== "undefined")
+     {
+
+        // if(typeof(w) == "undefined")
+        //  {
+            w = new Worker("clock.js");
+
+        // }
+        w.onmessage = function(event) 
+        {
+            all=event.data;
+            y=all.y;
+            v=all.v+all.m;
+            b=all.b;
+            days=all.d;
+            
+
+            var d=min.style.transform="rotate("+y+"deg)";
+                hr.style.transform="rotate("+v+"deg)";
+                sec.style.transform="rotate("+b+"deg)";
+                d=["Sunday","Monday","Tuesday","wednesday","Thursday","Friday","Saturday"]
+                day.innerHTML=d[days];
+
+        };
+
+        postMessage();
+    } 
+
+    else
+     {
+        document.getElementById("result").innerHTML = "Sorry! No Web Worker support.";
+    }
+}
+startWorker();
+// }); 
+
+</script>
